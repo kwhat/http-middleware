@@ -9,9 +9,9 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use What4\Http\Server\MiddlewareStack;
+use What4\Http\Middleware\MiddlewareStack;
 
-class MiddlewareStackTest  extends TestCase
+class MiddlewareStackTest extends TestCase
 {
     /** @var RequestHandlerInterface $subject */
     private $kernel;
@@ -44,9 +44,11 @@ class MiddlewareStackTest  extends TestCase
 
     public function testSeed(): void
     {
+        $request = $this->createMock(ServerRequestInterface::class);
         $this->kernel
             ->expects($this->never())
-            ->method("handle");
+            ->method("handle")
+            ->with($request);
     }
 
     public function testRun(): void
@@ -56,7 +58,7 @@ class MiddlewareStackTest  extends TestCase
         $this->kernel
             ->expects($this->once())
             ->method("handle")
-            ->with($request, $this->handler);
+            ->with($request);
 
         $this->middleware
             ->expects($this->once())

@@ -2,15 +2,12 @@
 
 declare(strict_types=1);
 
-namespace What4\Http\Server;
+namespace What4\Http\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use What4\Http\Interfaces\MiddlewareStackableInterface;
-use What4\Http\Interfaces\MiddlewareStackInterface;
-use What4\Http\Middleware\MiddlewareStackable;
 
 class MiddlewareStack implements MiddlewareStackInterface
 {
