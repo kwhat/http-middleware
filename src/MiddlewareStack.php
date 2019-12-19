@@ -11,7 +11,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class MiddlewareStack implements MiddlewareStackInterface
 {
-    /** @var RequestHandlerInterface $middleware */
+    /** @var RequestHandlerInterface $resolver */
     protected $middleware;
 
     /**
@@ -40,12 +40,15 @@ class MiddlewareStack implements MiddlewareStackInterface
     public function seed(RequestHandlerInterface $kernel): MiddlewareStackInterface
     {
         if ($this->middleware instanceof MiddlewareStackableInterface) {
-            $tip = $this->middleware;
-            while ($tip->getNext() instanceof MiddlewareStackableInterface) {
-                $tip = $tip->getHandler();
+            $next = $this->middleware;
+
+            $i = 0;
+            while ($next->getHandler() instanceof MiddlewareStackableInterface) {
+                $next = $next->getHandler();
+                echo ++$i;
             }
 
-            $tip->setHandler($kernel);
+            $next->setHandler($kernel);
         } else {
             $this->middleware = $kernel;
         }
