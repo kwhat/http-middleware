@@ -18,6 +18,7 @@
         "psr/http-server-middleware": "^1.0"
     },
     "require-dev": {
+        "phan/phan": "^2.2",
         "phpunit/phpunit": "^8",
         "squizlabs/php_codesniffer": "3.*"
     },
@@ -41,10 +42,8 @@
     },
     "scripts": {
         "lint": [
-            "phpcs --standard=PSR1,PSR2 src/ tests/"
-        ],
-        "fix": [
-            "phpcbf --standard=PSR1,PSR2 src/ tests/"
+            "phpcs --standard=PSR1,PSR2 src/ tests/",
+            "phan"
         ],
         "test": [
             "phpunit --coverage-html build/coverage tests/"

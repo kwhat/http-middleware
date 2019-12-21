@@ -12,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 class MiddlewareStack implements MiddlewareStackInterface
 {
     /** @var RequestHandlerInterface $resolver */
-    protected $middleware;
+    protected $resolver;
 
     /**
      * @param RequestHandlerInterface $kernel
@@ -24,30 +24,32 @@ class MiddlewareStack implements MiddlewareStackInterface
     }
 
     /**
+     * @inheritDoc
      * @param MiddlewareInterface $middleware
      * @return self
      */
     public function add(MiddlewareInterface $middleware): MiddlewareStackInterface
     {
-        $this->middleware = new MiddlewareStackable($middleware, $this->middleware);
+        $this->resolver = new MiddlewareStackable($middleware, $this->resolver);
         return $this;
     }
 
     /**
+     * @inheritDoc
      * @param RequestHandlerInterface $kernel
      * @return self
      */
     public function seed(RequestHandlerInterface $kernel): MiddlewareStackInterface
     {
-        if ($this->middleware instanceof MiddlewareStackableInterface) {
-            $next = $this->middleware;
+        if ($this->resolver instanceof MiddlewareStackableInterface) {
+            $next = $this->resolver;
             while ($next->getHandler() instanceof MiddlewareStackableInterface) {
                 $next = $next->getHandler();
             }
 
             $next->setHandler($kernel);
         } else {
-            $this->middleware = $kernel;
+            $this->resolver = $kernel;
         }
 
         return $this;
@@ -59,6 +61,6 @@ class MiddlewareStack implements MiddlewareStackInterface
      */
     public function run(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->middleware->handle($request);
+        return $this->resolver->handle($request);
     }
 }
