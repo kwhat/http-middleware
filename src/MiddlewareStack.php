@@ -41,11 +41,8 @@ class MiddlewareStack implements MiddlewareStackInterface
     {
         if ($this->middleware instanceof MiddlewareStackableInterface) {
             $next = $this->middleware;
-
-            $i = 0;
             while ($next->getHandler() instanceof MiddlewareStackableInterface) {
                 $next = $next->getHandler();
-                echo ++$i;
             }
 
             $next->setHandler($kernel);

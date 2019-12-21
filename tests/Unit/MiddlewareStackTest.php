@@ -63,31 +63,19 @@ class MiddlewareStackTest extends TestCase
             ->with($this->request)
             ->willReturn($response);
 
-        $this->subject->seed($seed)->run($this->request);
-
-        /** @var MockObject|MiddlewareInterface $middleware */
-        $middleware = $this->createMock(MiddlewareInterface::class);
-        $middleware
-            ->expects($this->once())
-            ->method("process")
-            ->with($this->request, $this->kernel)
-            ->willReturn($response);
-
-        $seed
-            ->expects($this->never())
-            ->method("handle");
-
-        $seed
-            ->expects($this->once())
-            ->method("setHandler")
-            ->with($this->kernel)
-            ->willReturn($response);
+        $middleware = new class implements MiddlewareInterface {
+            public function process(
+                ServerRequestInterface $request,
+                RequestHandlerInterface $handler
+            ): ResponseInterface {
+                return $handler->handle($request);
+            }
+        };
 
         $this->subject
-            ->add($this->createMock(MiddlewareInterface::class))
-            ->add($this->createMock(MiddlewareInterface::class))
             ->add($middleware)
-            ->seed($this->kernel)
+            ->add($middleware)
+            ->seed($seed)
             ->run($this->request);
     }
 
