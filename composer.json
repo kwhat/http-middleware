@@ -1,7 +1,7 @@
 {
     "name": "kwhat/http-middleware",
     "description": "",
-    "homepage": "https://github.com/kwhat/http-middleware-stack",
+    "homepage": "https://github.com/kwhat/http-middleware",
     "license": "MIT",
     "type": "library",
     "authors": [

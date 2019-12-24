@@ -19,7 +19,6 @@ class MiddlewareStack implements MiddlewareStackInterface
      */
     public function __construct(RequestHandlerInterface $kernel)
     {
-        // Seed the middleware stack
         $this->seed($kernel);
     }
 
