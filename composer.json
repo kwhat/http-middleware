@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "What4\\Http\\Middleware\\": "src"
+            "What4\\Http\\Server\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "What4\\Http\\Middleware\\Test\\": "tests"
+            "What4\\Http\\Server\\Test\\": "tests"
         }
     },
     "config": {

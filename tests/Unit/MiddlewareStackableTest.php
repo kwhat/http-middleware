@@ -1,13 +1,15 @@
 <?php
 
-namespace What4\Http\Middleware\Test;
+declare(strict_types=1);
+
+namespace What4\Http\Server\Test;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use What4\Http\Middleware\MiddlewareStackable;
+use What4\Http\Server\MiddlewareStackable;
 
 /**
  * RequestHandlerInterface to chain MiddlewareInterface's

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace What4\Http\Middleware;
+namespace What4\Http\Server;
 
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;

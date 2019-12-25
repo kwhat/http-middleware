@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use What4\Http\Middleware\MiddlewareStack;
+use What4\Http\Server\MiddlewareStack;
 
 class MiddlewareStackTest extends TestCase
 {
