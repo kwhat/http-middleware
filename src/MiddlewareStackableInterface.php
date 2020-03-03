@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace What4\Http\Server;
 
 use Psr\Http\Server\MiddlewareInterface;
