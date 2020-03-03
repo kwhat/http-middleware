@@ -7,10 +7,13 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+/**
+ * LIFO stack where middleware is placed.
+ */
 class MiddlewareStack implements MiddlewareStackInterface
 {
-    /** @var RequestHandlerInterface $resolver */
-    protected $resolver;
+    /** @var RequestHandlerInterface $stack */
+    protected $stack;
 
     /**
      * @param RequestHandlerInterface $kernel
@@ -27,7 +30,7 @@ class MiddlewareStack implements MiddlewareStackInterface
      */
     public function add(MiddlewareInterface $middleware): MiddlewareStackInterface
     {
-        $this->resolver = new MiddlewareStackable($middleware, $this->resolver);
+        $this->stack = new MiddlewareStackable($middleware, $this->stack);
         return $this;
     }
 
@@ -38,26 +41,28 @@ class MiddlewareStack implements MiddlewareStackInterface
      */
     public function seed(RequestHandlerInterface $kernel): MiddlewareStackInterface
     {
-        if ($this->resolver instanceof MiddlewareStackableInterface) {
-            $next = $this->resolver;
+        // Check to see if the tip of the stack is a RequestHandler or MiddlewareInterface
+        if ($this->stack instanceof MiddlewareStackableInterface) {
+            $next = $this->stack;
             while ($next->getHandler() instanceof MiddlewareStackableInterface) {
                 $next = $next->getHandler();
             }
 
             $next->setHandler($kernel);
         } else {
-            $this->resolver = $kernel;
+            $this->stack = $kernel;
         }
 
         return $this;
     }
 
     /**
+     * @inheritDoc
      * @param ServerRequestInterface $request
      * @return ResponseInterface
      */
     public function run(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->resolver->handle($request);
+        return $this->stack->handle($request);
     }
 }

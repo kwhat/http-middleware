@@ -8,7 +8,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * RequestHandlerInterface to chain MiddlewareInterface's
+ * RequestHandlerInterface wrapper to chain MiddlewareInterface's
  */
 class MiddlewareStackable implements MiddlewareStackableInterface
 {

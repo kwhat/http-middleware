@@ -9,9 +9,6 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use What4\Http\Server\MiddlewareStackable;
 
-/**
- * RequestHandlerInterface to chain MiddlewareInterface's
- */
 class MiddlewareStackableTest extends TestCase
 {
     /** @var MockObject|MiddlewareInterface $middleware */
